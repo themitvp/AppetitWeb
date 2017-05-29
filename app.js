@@ -3,6 +3,8 @@ angular
   .controller('mainController', function ($http) {
     var vm = this;
 
+    vm.favoriteRecipe = favoriteRecipe;
+
     init();
 
     function init () {
