@@ -23,9 +23,7 @@ angular
     function resetUser () {
       localStorage.removeItem('userId');
       return loadUser()
-        .then(function () {
-          flagFavorites();
-        });;
+        .then(flagFavorites);
     }
 
     function loadUser () {
@@ -50,7 +48,7 @@ angular
 
       recipe.favorited = isFavorited(recipe);
 
-      return $http.put('http://52.42.210.120:8000/api/v1/users/update/' + vm.user.id, vm.user)
+      return $http.put('http://52.42.210.120:8000/api/v1/users/update/' + vm.user.id + '/', vm.user)
         .then(function (response) {
           vm.user = response.data;
         });
