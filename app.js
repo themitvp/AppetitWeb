@@ -1,5 +1,5 @@
 angular
-  .module('appetit', [])
+  .module('appetit', ['angularLazyImg'])
   .controller('mainController', function ($http) {
     var vm = this;
 

@@ -1,10 +1,12 @@
 body {
     background: #EEF5FD;
+    color: #313E50;
 }
 
 .title {
     font-size: 8vw;
     margin-bottom: 50px;
+    font-weight: bold;
 }
 
 .caption {
@@ -27,7 +29,7 @@ body {
     transform: translateY(-50%);
 }
 
-.favorite-recipe-btn:hover {
+.favorite-recipe-btn:hover, .favorite-recipe-btn:focus {
     color: #f13e28;
 }
 
