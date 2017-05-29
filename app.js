@@ -4,11 +4,31 @@ angular
     var vm = this;
 
     vm.favoriteRecipe = favoriteRecipe;
+    vm.resetUser = resetUser;
 
     init();
 
     function init () {
-      createUser().then(getRecipes);
+      loadUser().then(getRecipes);
+    }
+    
+    function loadUser () {
+      var savedUserId = localStorage.getItem('userId')
+        , userPromise = savedUserId ? getUser(savedUserId) : createUser();
+
+      return userPromise
+        .then(function (user) {
+          if (!user.recipeFavorite)
+            user.recipeFavorite = [];
+
+          vm.user = user;
+          localStorage.setItem('userId', user.id);
+        })
+    }
+
+    function resetUser () {
+      localStorage.removeItem('userId');
+      return loadUser();
     }
 
     function favoriteRecipe (recipe) {
@@ -27,6 +47,13 @@ angular
         });
     }
 
+    function getUser (id) {
+      return $http.get('http://52.42.210.120:8000/api/v1/users/list/?userId=' + id)
+        .then(function (response) {
+          return response.data[0];
+        });
+    }
+
     function createUser () {
       var data = {
         name: 'AlgoritmeTester',
@@ -39,10 +66,7 @@ angular
 
       return $http.post('http://52.42.210.120:8000/api/v1/users/create/', data)
         .then(function (response) {
-          vm.user = response.data;
-
-          if (!vm.user.recipeFavorite)
-            vm.user.recipeFavorite = [];
+          return response.data;
         });
     }
   });
