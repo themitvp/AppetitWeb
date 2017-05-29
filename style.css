@@ -2,6 +2,41 @@ body {
     background: #EEF5FD;
 }
 
+.title {
+    font-size: 8vw;
+    margin-bottom: 50px;
+}
+
+.caption {
+    position: relative;
+}
+
+.caption h3 {
+    width: 80%;
+    padding-left: 10px;
+}
+
+.favorite-recipe-btn {
+    font-size: 35px;
+    color: #ED6A5A;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 20%;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.favorite-recipe-btn:hover {
+    color: #f13e28;
+}
+
 .thumbnail>img {
     width: 100%;
+}
+
+.fixed {
+    position: fixed;
+    top: 5px;
+    right: 5px;
 }
