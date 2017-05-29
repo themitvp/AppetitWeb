@@ -32,8 +32,8 @@ angular
         name: 'AlgoritmeTester',
         household: 1,
         allergies: [],
-        foodDiet: 'none',
-        segment: 'single/couple',
+        foodDiet: 0,
+        segment: 0,
         recipeFavorite: []
       };
 
