@@ -5,6 +5,6 @@ angular
 
     $http.get('http://52.42.210.120:8000/api/v1/recipes/listAll/?limit=100')
       .then(function (response) {
-        vm.recipes = response.data;
+        vm.recipes = response.data.results;
       });
   });

@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/themitvp/AppetitWeb#readme",
   "dependencies": {
-    "angularjs": "0.0.1",
+    "angular": "^1.6.4",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1"
   }
