@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Appetit Web</title>
+  </head>
+  <body ng-app="appetit">
+    <div ng-controller="mainController as vm">
+      <div ng-repeat="recipe in vm.recipes">
+        {{ recipe.name }}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "appetitweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/themitvp/AppetitWeb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/themitvp/AppetitWeb/issues"
+  },
+  "homepage": "https://github.com/themitvp/AppetitWeb#readme",
+  "dependencies": {
+    "angularjs": "0.0.1",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
+  }
+}
