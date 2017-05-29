@@ -5,11 +5,18 @@ angular
 
     vm.favoriteRecipe = favoriteRecipe;
     vm.resetUser = resetUser;
+    vm.isFavorited = isFavorited;
+    vm.loading = false;
 
     init();
 
     function init () {
-      loadUser().then(getRecipes);
+      vm.loading = true;
+      loadUser()
+        .then(getRecipes)
+        .then(function () {
+          vm.loading = false;
+        });
     }
     
     function loadUser () {
@@ -36,8 +43,20 @@ angular
 
       return $http.put('http://52.42.210.120:8000/api/v1/users/update/' + vm.user.id, vm.user)
         .then(function (response) {
-          vm.user = response.data
+          vm.user = response.data;
         });
+    }
+    
+    function isFavorited (recipe) {
+      if (!vm.user || !vm.user.recipeFavorite)
+        return false;
+
+      for (var i = 0; i < vm.user.recipeFavorite.length; i++) {
+        if (vm.user.recipeFavorite[i].id === recipe.id)
+          return true;
+      }
+
+      return false;
     }
 
     function getRecipes () {
