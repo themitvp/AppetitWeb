@@ -15,10 +15,17 @@ angular
       loadUser()
         .then(getRecipes)
         .then(function () {
+          flagFavorites();
           vm.loading = false;
         });
     }
     
+    function resetUser () {
+      localStorage.removeItem('userId');
+      return loadUser()
+        .then(flagFavorites);
+    }
+
     function loadUser () {
       var savedUserId = localStorage.getItem('userId')
         , userPromise = savedUserId ? getUser(savedUserId) : createUser();
@@ -33,26 +40,30 @@ angular
         })
     }
 
-    function resetUser () {
-      localStorage.removeItem('userId');
-      return loadUser();
-    }
-
     function favoriteRecipe (recipe) {
-      vm.user.recipeFavorite.push(recipe.id);
+      if (!recipe.favorited)
+        vm.user.recipeFavorite.push(recipe.id);
+      else
+        vm.user.recipeFavorite.splice(vm.user.recipeFavorite.indexOf(recipe.id), 1);
 
-      return $http.put('http://52.42.210.120:8000/api/v1/users/update/' + vm.user.id, vm.user)
+      recipe.favorited = isFavorited(recipe);
+
+      return $http.put('http://52.42.210.120:8000/api/v1/users/update/' + vm.user.id + '/', vm.user)
         .then(function (response) {
           vm.user = response.data;
         });
     }
+
+    function flagFavorites () {
+      for (var i = 0; i < vm.recipes.length; i++) {
+        var recipe = vm.recipes[i];
+        recipe.favorited = isFavorited(recipe);
+      }
+    }
     
     function isFavorited (recipe) {
-      if (!vm.user || !vm.user.recipeFavorite)
-        return false;
-
       for (var i = 0; i < vm.user.recipeFavorite.length; i++) {
-        if (vm.user.recipeFavorite[i].id === recipe.id)
+        if (vm.user.recipeFavorite[i] === recipe.id)
           return true;
       }
 
