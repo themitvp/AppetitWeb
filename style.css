@@ -23,6 +23,8 @@ body {
     color: #ED6A5A;
     position: absolute;
     top: 50%;
+    bottom: 0;
+    height: 35px;
     right: 0;
     width: 20%;
     text-align: center;
@@ -37,8 +39,12 @@ body {
     width: 100%;
 }
 
+.thumbnail .well {
+    margin: 9px;
+}
+
 .fixed {
     position: fixed;
     top: 5px;
-    right: 5px;
+    left: 5px;
 }
