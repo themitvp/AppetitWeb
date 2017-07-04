@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="appetit">
 
 <head>
   <title>Appetit Web</title>
@@ -9,61 +9,21 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css">
   <link rel="stylesheet" href='node_modules/angular-loading-bar/build/loading-bar.min.css'>
   <link rel="stylesheet" href="style.css">
+  <base href="/" />
 </head>
 
-<body ng-app="appetit" ng-controller="mainController as vm">
+<body ng-controller="mainController as vm">
   <div class="container">
     <h1 class="title text-center">Appetit</h1>
     <h3 ng-if="vm.loading" class="text-center">LOADING...</h3>
-    <div class="row" ng-repeat="recipe in vm.recipes">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="thumbnail">
-          <img lazy-img="{{recipe.image}}">
-          <div class="caption">
-            <h3>{{ recipe.name }}</h3>
-            <a href="" ng-click="vm.favoriteRecipe(recipe)" class="favorite-recipe-btn">
-              <span class="glyphicon" ng-class="recipe.favorited ? 'glyphicon-heart' : 'glyphicon-heart-empty'"></span>
-            </a>
-          </div>
-          <div class="caption">
-            <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample{{recipe.id}}"
-              aria-expanded="false" aria-controls="collapseExample">Vise detailjer <span class="caret"></span></button>
-          </div>
-          <div class="collapse" id="collapseExample{{recipe.id}}">
-            <div class="caption well">
-              <h4>Detailjer</h4>
-              <p ng-if="recipe.introduction">Introduktion: {{recipe.introduction}}</p>
-              <p ng-if="recipe.people">Antal personer: {{recipe.people}}</p>
-              <p ng-if="recipe.totalMinutes">Total antal minuter: {{recipe.totalMinutes}}</p>
-              <h4 ng-if="recipe.groups">Ingredienser</h4>
-              <div ng-if="recipe.groups">
-                <div ng-repeat="group in recipe.groups">
-                  {{group.name}}
-                  <ul class="list-group">
-                    <li ng-repeat="ingredient in group.ingredients" class="list-group-item"><strong>{{ingredient.amount}} {{ingredient.unit.name}}</strong> {{ingredient.name.name}}</li>
-                  </ul>
-                </div>
-              </div>
-              <h4 ng-if="recipe.steps">Fremgangsmåde</h4>
-              <ul ng-if="recipe.steps" class="list-group">
-                <li ng-repeat="step in recipe.steps" class="list-group-item">
-                  {{$index+1}}. {{step.text}}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-
-
-      </div>
-    </div>
+    <div class="ng-view"></div>
   </div>
   <button type="button" class="btn btn-success fixed" ng-click="vm.resetUser()">Ny Bruger</button>
 
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/angular/angular.min.js"></script>
   <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+  <script src="node_modules/angular-route/angular-route.min.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="node_modules/angular-lazy-img/dist/angular-lazy-img.min.js"></script>
   <script src='node_modules/angular-loading-bar/build/loading-bar.min.js'></script>

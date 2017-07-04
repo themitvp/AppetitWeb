@@ -1,0 +1,40 @@
+<div class="row" ng-repeat="recipe in vm.recipes">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="thumbnail">
+            <img lazy-img="{{recipe.image}}">
+            <div class="caption">
+                <h3>{{ recipe.name }}</h3>
+                <a href="" ng-click="vm.favoriteRecipe(recipe)" class="favorite-recipe-btn">
+                    <span class="glyphicon" ng-class="recipe.favorited ? 'glyphicon-heart' : 'glyphicon-heart-empty'"></span>
+                </a>
+            </div>
+            <div class="caption">
+                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample{{recipe.id}}"
+                    aria-expanded="false" aria-controls="collapseExample">Vise detailjer <span class="caret"></span></button>
+            </div>
+            <div class="collapse" id="collapseExample{{recipe.id}}">
+                <div class="caption well">
+                    <h4>Detailjer</h4>
+                    <p ng-if="recipe.introduction">Introduktion: {{recipe.introduction}}</p>
+                    <p ng-if="recipe.people">Antal personer: {{recipe.people}}</p>
+                    <p ng-if="recipe.totalMinutes">Total antal minuter: {{recipe.totalMinutes}}</p>
+                    <h4 ng-if="recipe.groups">Ingredienser</h4>
+                    <div ng-if="recipe.groups">
+                        <div ng-repeat="group in recipe.groups">
+                            {{group.name}}
+                            <ul class="list-group">
+                                <li ng-repeat="ingredient in group.ingredients" class="list-group-item"><strong>{{ingredient.amount}} {{ingredient.unit.name}}</strong> {{ingredient.name.name}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h4 ng-if="recipe.steps">Fremgangsmåde</h4>
+                    <ul ng-if="recipe.steps" class="list-group">
+                        <li ng-repeat="step in recipe.steps" class="list-group-item">
+                            {{$index+1}}. {{step.text}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,12 @@
 angular
-  .module('appetit', ['angularLazyImg'])
+  .module('appetit', ['angularLazyImg', 'ngRoute', 'angular-loading-bar'])
+  .config(function ($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
+
+    $routeProvider.when('/', {
+      templateUrl: '/templates/main.html'
+    }).otherwise('/');
+  })
   .controller('mainController', function ($http) {
     var vm = this;
 
@@ -10,7 +17,7 @@ angular
 
     init();
 
-    function init () {
+    function init() {
       vm.loading = true;
       loadUser()
         .then(getRecipes)
@@ -19,14 +26,14 @@ angular
           vm.loading = false;
         });
     }
-    
-    function resetUser () {
+
+    function resetUser() {
       localStorage.removeItem('userId');
       return loadUser()
         .then(flagFavorites);
     }
 
-    function loadUser () {
+    function loadUser() {
       var savedUserId = localStorage.getItem('userId')
         , userPromise = savedUserId ? getUser(savedUserId) : createUser();
 
@@ -40,7 +47,7 @@ angular
         })
     }
 
-    function favoriteRecipe (recipe) {
+    function favoriteRecipe(recipe) {
       if (!recipe.favorited)
         vm.user.recipeFavorite.push(recipe.id);
       else
@@ -54,14 +61,14 @@ angular
         });
     }
 
-    function flagFavorites () {
+    function flagFavorites() {
       for (var i = 0; i < vm.recipes.length; i++) {
         var recipe = vm.recipes[i];
         recipe.favorited = isFavorited(recipe);
       }
     }
-    
-    function isFavorited (recipe) {
+
+    function isFavorited(recipe) {
       for (var i = 0; i < vm.user.recipeFavorite.length; i++) {
         if (vm.user.recipeFavorite[i] === recipe.id)
           return true;
@@ -70,21 +77,21 @@ angular
       return false;
     }
 
-    function getRecipes () {
+    function getRecipes() {
       return $http.get('http://52.42.210.120:8000/api/v1/recipes/listAll/?limit=100')
         .then(function (response) {
           vm.recipes = response.data.results;
         });
     }
 
-    function getUser (id) {
+    function getUser(id) {
       return $http.get('http://52.42.210.120:8000/api/v1/users/list/?userId=' + id)
         .then(function (response) {
           return response.data[0];
         });
     }
 
-    function createUser () {
+    function createUser() {
       var data = {
         name: 'AlgoritmeTester',
         household: 1,
@@ -99,4 +106,7 @@ angular
           return response.data;
         });
     }
+  }).run(function ($http) {
+    $http.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $http.defaults.xsrfCookieName = 'csrftoken';
   });
